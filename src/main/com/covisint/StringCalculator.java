@@ -34,22 +34,7 @@ public class StringCalculator
           Matcher matcher = pattern.matcher( temp[ 0 ]);
           
           while( matcher.find() ) {
-            String group = matcher.group( 1 );
-            // special regex characters need escaping
-            group = group.replaceAll( "[$]", "[\\$]" )
-                         .replaceAll( "[*]", "[\\*]" )
-                         .replaceAll( "[(]", "[\\(]" )
-                         .replaceAll( "[)]", "[\\)]" )
-                         .replaceAll( "[{]", "[\\{]" )
-                         .replaceAll( "[}]", "[\\}]" )
-                         .replaceAll( "[|]", "[\\|]" )
-                         .replaceAll( "[.]", "[\\.]" )
-                         .replaceAll( "[?]", "[\\?]" )
-                         .replaceAll( "[+]", "[\\+]" )
-                         .replaceAll( "[\\^]", "[\\\\^]" )
-                         .replaceAll( "[\\\\]", "[\\\\\\\\]" )
-                         ;
-            retval[ 1 ] = retval[ 1 ].replaceAll( group, "," );
+            retval[ 1 ] = retval[ 1 ].replaceAll( Pattern.quote( matcher.group( 1 ) ), "," );
           }
         }
       }
