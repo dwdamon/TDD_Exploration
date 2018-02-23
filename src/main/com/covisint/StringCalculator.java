@@ -5,44 +5,30 @@ import java.util.regex.Pattern;
 
 public class StringCalculator
 {
+  private static String[] EMPTY_TOKEN_SET = new String[ 0 ];
+  
   public StringCalculator()
   {
   }
   
-  private String[] getParseInfo( String value )
-  {
-    String[] retval = new String[] { null, null };
-    String   work   = value;
-    
-    retval[ 0 ] = "[,]";
-    
-    char first  = value.charAt( 0 );
+  private String[] tokenizeCommaAndNewLineDelimiters( String value ) {
+    return value.split( "[\n,]" );
+  }
   
-    //if( value.length() > 1 && first != '-' && ( first < '0' || first > '9' ))
-    if( work.length() > 1 && work.startsWith( "//" ))
-    {
-      work = work.substring( 2 );
-      String[] temp = work.split( "\n", 2 );
-      
-      if( temp[ 1 ] != null )
-      {
-        retval[ 1 ] = temp[ 1 ];
-        
-        if( temp[ 0 ].length() > 0 )
-        {
-          Pattern pattern = Pattern.compile( "([^\\[\\]]+)" );
-          Matcher matcher = pattern.matcher( temp[ 0 ]);
-          
-          while( matcher.find() ) {
-            retval[ 1 ] = retval[ 1 ].replaceAll( Pattern.quote( matcher.group( 1 ) ), "," );
-          }
-        }
+  private String[] tokenizeCustomDelimiters( String value ) {
+    String   work   = value.substring( 2 );
+    String[] temp   = work.split( "\n", 2 );
+    String[] retval = StringCalculator.EMPTY_TOKEN_SET;
+  
+    if( temp[ 0 ] != null && temp[ 1 ] != null && temp[ 0 ].length() > 0 && temp[ 1 ].length() > 0 ) {
+      Pattern pattern = Pattern.compile( "([^\\[\\]]+)" );
+      Matcher matcher = pattern.matcher( temp[ 0 ]);
+  
+      while( matcher.find() ) {
+        temp[ 1 ] = temp[ 1 ].replaceAll( Pattern.quote( matcher.group( 1 )), "," );
       }
-    }
-    
-    if( retval[ 1 ] == null )
-    {
-      retval[ 1 ] = work.replaceAll( "\n", "," );
+      
+      retval = tokenizeCommaAndNewLineDelimiters( temp[ 1 ]);
     }
     
     return retval;
@@ -51,22 +37,28 @@ public class StringCalculator
   public int calculate( String value )
   {
     int retval = 0;
-    
+  
     if( value != null && value.length() > 0 )
     {
-      String[] parseInfo = getParseInfo( value );
-      String[] values    = parseInfo[ 1 ].split( parseInfo[ 0 ]);
+      String[] tokens = null;
+      if( value.startsWith( "//" ))
+      {
+        tokens = this.tokenizeCustomDelimiters( value );
+      }
+      else {
+        tokens = tokenizeCommaAndNewLineDelimiters( value );
+      }
       
-      for( int i = 0; i < values.length; ++i ) {
-        int temp = Integer.parseInt( values[ i ] );
+      for( int i = 0; i < tokens.length; ++i ) {
+        int temp = Integer.parseInt( tokens[ i ] );
         if( temp < 0 ) {
           throw new IllegalArgumentException( "Negative numbers are not allowed." );
         }
         retval += temp < 1001 ? temp : 0;
       }
     }
-    
-    return retval;
-  }
   
+    return retval;
+    
+  }
 }
