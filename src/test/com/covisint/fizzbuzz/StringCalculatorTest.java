@@ -119,5 +119,17 @@ public class StringCalculatorTest
     assertEquals( StringCalculator.calculate( "//[+++][+]\n1000+5+++1" ), 1006 );
     // so this will pass because the string gets really fouled up.  It's not worth fixing here.
     assertThrows( NumberFormatException.class, () -> { StringCalculator.calculate( "//[+][+++]\n1000+5+++1" ); } );
+  
+    // This happens with any sequence where one sequence is an abbreviation for the other.  If this is the case then the
+    // shorter string has to go last.
+    assertThrows( NumberFormatException.class, () -> { StringCalculator.calculate( "//[bob][bobo]\n1000bob5bobo1" ); } );
+  
+    // If you put numbers in your string it can get real confusing....
+    assertEquals( StringCalculator.calculate( "//[M5]\n1000M55M51" ), 1006 );
+    // ANd this has to be really silly to do anyway......
+    assertEquals( StringCalculator.calculate( "//[965]\n100096559651" ), 1006 );
+    
+    // Or you can just make it look normal
+    assertEquals( StringCalculator.calculate( "//[+]\n1000+125+25" ), 1150 );
   }
 }
