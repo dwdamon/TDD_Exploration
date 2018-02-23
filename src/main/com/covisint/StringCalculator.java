@@ -11,15 +11,18 @@ public class StringCalculator
   
   private String[] getParseInfo( String value )
   {
-    String[]      retval = new String[] { null, null };
+    String[] retval = new String[] { null, null };
+    String   work   = value;
     
     retval[ 0 ] = "[,]";
     
     char first  = value.charAt( 0 );
   
-    if( value.length() > 1 && first != '-' && ( first < '0' || first > '9' ))
+    //if( value.length() > 1 && first != '-' && ( first < '0' || first > '9' ))
+    if( work.length() > 1 && work.startsWith( "//" ))
     {
-      String[] temp = value.split( "\n", 2 );
+      work = work.substring( 2 );
+      String[] temp = work.split( "\n", 2 );
       
       if( temp[ 1 ] != null )
       {
@@ -54,7 +57,7 @@ public class StringCalculator
     
     if( retval[ 1 ] == null )
     {
-      retval[ 1 ] = value.replaceAll( "\n", "," );
+      retval[ 1 ] = work.replaceAll( "\n", "," );
     }
     
     return retval;

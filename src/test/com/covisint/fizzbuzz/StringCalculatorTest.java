@@ -24,6 +24,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * 9)  A multi char delimiter can be defined on the first line (e.g. //[###] for ‘###’ as the delimiter)
  * 10) Many single or multi-char delimiters can be defined (each wrapped in square brackets)
  *
+ * Apparently I did not pay close enough attention to the instructions.... and I did not have the
+ * "//" at the beginning of the line to indicate custom delimiters being used.  I just looked for
+ * any non-numeric value (excluded '-' too).
+ * I fixed it to look gor the "//". Made the logic a smidge simpler.  Not much though.
  */
 
 @TestInstance( TestInstance.Lifecycle.PER_CLASS )
@@ -91,37 +95,37 @@ public class StringCalculatorTest
   
   @Test
   void delimiterDefinedOnFirstLine() {
-    assertEquals( calculator.calculate( "#\n1000#5#1" ), 1006 );
+    assertEquals( calculator.calculate( "//#\n1000#5#1" ), 1006 );
   }
   
   @Test
   void multicharDelimiterDefinedOnFirstLine() {
-    assertEquals( calculator.calculate( "##\n1000##5##1" ), 1006 );
-    assertEquals( calculator.calculate( "[##]\n1000##5##1" ), 1006 );
+    assertEquals( calculator.calculate( "//##\n1000##5##1" ), 1006 );
+    assertEquals( calculator.calculate( "//[##]\n1000##5##1" ), 1006 );
   }
   
   @Test
   void multicharDelimiterSetDefinedOnFirstLine() {
-    assertEquals( calculator.calculate( "[##][:]\n1000##5:1" ), 1006 );
-    assertEquals( calculator.calculate( "[buggs][bunny]\n1000buggs5bunny1" ), 1006 );
-    assertEquals( calculator.calculate( "[_][~]\n1000_5~1" ), 1006 );
-    assertEquals( calculator.calculate( "[@][2]\n1000@521" ), 1006 );
-    assertEquals( calculator.calculate( "[!][$]\n1000!5$1" ), 1006 );
-    assertEquals( calculator.calculate( "[%][^]\n1000%5^1" ), 1006 );
-    assertEquals( calculator.calculate( "[&][*]\n1000&5*1" ), 1006 );
-    assertEquals( calculator.calculate( "[(][)]\n1000(5)1" ), 1006 );
-    assertEquals( calculator.calculate( "[{][}]\n1000{5}1" ), 1006 );
-    assertEquals( calculator.calculate( "[`][|]\n1000`5|1" ), 1006 );
-    assertEquals( calculator.calculate( "[\\][;]\n1000\\5;1" ), 1006 );
-    assertEquals( calculator.calculate( "[\\][;]\n1000\\5;1" ), 1006 );
-    assertEquals( calculator.calculate( "[.][?]\n1000.5?1" ), 1006 );
-    assertEquals( calculator.calculate( "[=][+]\n1000=5+1" ), 1006 );
-    assertEquals( calculator.calculate( "[<][>]\n1000<5>1" ), 1006 );
-    assertEquals( calculator.calculate( "[\"][']\n1000\"5'1" ), 1006 );
-    assertEquals( calculator.calculate( "[-][BbB]\n1000-5BbB1" ), 1006 );
+    assertEquals( calculator.calculate( "//[##][:]\n1000##5:1" ), 1006 );
+    assertEquals( calculator.calculate( "//[buggs][bunny]\n1000buggs5bunny1" ), 1006 );
+    assertEquals( calculator.calculate( "//[_][~]\n1000_5~1" ), 1006 );
+    assertEquals( calculator.calculate( "//[@][2]\n1000@521" ), 1006 );
+    assertEquals( calculator.calculate( "//[!][$]\n1000!5$1" ), 1006 );
+    assertEquals( calculator.calculate( "//[%][^]\n1000%5^1" ), 1006 );
+    assertEquals( calculator.calculate( "//[&][*]\n1000&5*1" ), 1006 );
+    assertEquals( calculator.calculate( "//[(][)]\n1000(5)1" ), 1006 );
+    assertEquals( calculator.calculate( "//[{][}]\n1000{5}1" ), 1006 );
+    assertEquals( calculator.calculate( "//[`][|]\n1000`5|1" ), 1006 );
+    assertEquals( calculator.calculate( "//[\\][;]\n1000\\5;1" ), 1006 );
+    assertEquals( calculator.calculate( "//[\\][;]\n1000\\5;1" ), 1006 );
+    assertEquals( calculator.calculate( "//[.][?]\n1000.5?1" ), 1006 );
+    assertEquals( calculator.calculate( "//[=][+]\n1000=5+1" ), 1006 );
+    assertEquals( calculator.calculate( "//[<][>]\n1000<5>1" ), 1006 );
+    assertEquals( calculator.calculate( "//[\"][']\n1000\"5'1" ), 1006 );
+    assertEquals( calculator.calculate( "//[-][BbB]\n1000-5BbB1" ), 1006 );
     // This works, but you have the order of the braketed strings matters
-    assertEquals( calculator.calculate( "[+++][+]\n1000+5+++1" ), 1006 );
+    assertEquals( calculator.calculate( "//[+++][+]\n1000+5+++1" ), 1006 );
     // so this will pass because the string gets really fouled up.  It's not worth fixing here.
-    assertThrows( NumberFormatException.class, () -> { calculator.calculate( "[+][+++]\n1000+5+++1" ); } );
+    assertThrows( NumberFormatException.class, () -> { calculator.calculate( "//[+][+++]\n1000+5+++1" ); } );
   }
 }
