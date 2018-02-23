@@ -33,99 +33,91 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestInstance( TestInstance.Lifecycle.PER_CLASS )
 public class StringCalculatorTest
 {
-  private StringCalculator calculator;
-  
-  @BeforeEach
-  void setUp()
-  {
-    calculator = new StringCalculator();
-  }
-  
   @Test
   void calculateEmptyString()
   {
-    assertEquals( calculator.calculate( "" ), 0 );
-    assertEquals( calculator.calculate( null ), 0 );
+    assertEquals( StringCalculator.calculate( "" ), 0 );
+    assertEquals( StringCalculator.calculate( null ), 0 );
   }
   
   @Test
   void calculateSingleDigit()
   {
-    assertEquals( calculator.calculate( "0" ), 0 );
-    assertEquals( calculator.calculate( "1" ), 1 );
-    assertEquals( calculator.calculate( "2" ), 2 );
+    assertEquals( StringCalculator.calculate( "0" ), 0 );
+    assertEquals( StringCalculator.calculate( "1" ), 1 );
+    assertEquals( StringCalculator.calculate( "2" ), 2 );
   }
   
   @Test
   void calculateTwoCommaSeparatedDigits()
   {
-    assertEquals( calculator.calculate( "0,1" ), 1 );
-    assertEquals( calculator.calculate( "10,11" ), 21 );
+    assertEquals( StringCalculator.calculate( "0,1" ), 1 );
+    assertEquals( StringCalculator.calculate( "10,11" ), 21 );
   }
   
   @Test
   void calculateTwoNewlineSeparatedDigits()
   {
-    assertEquals( calculator.calculate( "0\n1" ), 1 );
-    assertEquals( calculator.calculate( "30\n41" ), 71 );
+    assertEquals( StringCalculator.calculate( "0\n1" ), 1 );
+    assertEquals( StringCalculator.calculate( "30\n41" ), 71 );
   }
   
   @Test
   void calculateThreeNewlineSeparatedDigits()
   {
-    assertEquals( calculator.calculate( "0\n5,1" ), 6 );
-    assertNotEquals( calculator.calculate( "30\n5,41" ), 77 );
-    assertEquals( calculator.calculate( "30\n5,41" ), 76 );
+    assertEquals( StringCalculator.calculate( "0\n5,1" ), 6 );
+    assertNotEquals( StringCalculator.calculate( "30\n5,41" ), 77 );
+    assertEquals( StringCalculator.calculate( "30\n5,41" ), 76 );
   }
   
   @Test
   void negativeNumbersThrowException()
   {
-    assertThrows( IllegalArgumentException.class, () -> { calculator.calculate( "-1" ); }, "No negative numbers!" );
-    assertThrows( IllegalArgumentException.class, () -> { calculator.calculate( "1,-1" ); }, "No negative numbers!" );
+    assertThrows( IllegalArgumentException.class, () -> { StringCalculator.calculate( "-1" ); }, "No negative numbers!" );
+    assertThrows( IllegalArgumentException.class, () -> { StringCalculator.calculate( "1,-1" ); }, "No negative numbers!" );
   }
   
   @Test
   void numbersGreaterThanOneThousandIgnored()
   {
-    assertEquals( calculator.calculate( "1000\n5,1" ), 1006 );
-    assertNotEquals( calculator.calculate( "35\n1001,41" ), 77 );
-    assertEquals( calculator.calculate( "35\n41,1001" ), 76 );
+    assertEquals( StringCalculator.calculate( "1000\n5,1" ), 1006 );
+    assertNotEquals( StringCalculator.calculate( "35\n1001,41" ), 77 );
+    assertEquals( StringCalculator.calculate( "35\n41,1001" ), 76 );
   }
   
   @Test
   void delimiterDefinedOnFirstLine() {
-    assertEquals( calculator.calculate( "//#\n1000#5#1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//#\n1000#5#1" ), 1006 );
   }
   
   @Test
   void multicharDelimiterDefinedOnFirstLine() {
-    assertEquals( calculator.calculate( "//##\n1000##5##1" ), 1006 );
-    assertEquals( calculator.calculate( "//[##]\n1000##5##1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//##\n1000##5##1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[##]\n1000##5##1" ), 1006 );
   }
   
   @Test
   void multicharDelimiterSetDefinedOnFirstLine() {
-    assertEquals( calculator.calculate( "//[##][:]\n1000##5:1" ), 1006 );
-    assertEquals( calculator.calculate( "//[buggs][bunny]\n1000buggs5bunny1" ), 1006 );
-    assertEquals( calculator.calculate( "//[_][~]\n1000_5~1" ), 1006 );
-    assertEquals( calculator.calculate( "//[@][2]\n1000@521" ), 1006 );
-    assertEquals( calculator.calculate( "//[!][$]\n1000!5$1" ), 1006 );
-    assertEquals( calculator.calculate( "//[%][^]\n1000%5^1" ), 1006 );
-    assertEquals( calculator.calculate( "//[&][*]\n1000&5*1" ), 1006 );
-    assertEquals( calculator.calculate( "//[(][)]\n1000(5)1" ), 1006 );
-    assertEquals( calculator.calculate( "//[{][}]\n1000{5}1" ), 1006 );
-    assertEquals( calculator.calculate( "//[`][|]\n1000`5|1" ), 1006 );
-    assertEquals( calculator.calculate( "//[\\][;]\n1000\\5;1" ), 1006 );
-    assertEquals( calculator.calculate( "//[\\][;]\n1000\\5;1" ), 1006 );
-    assertEquals( calculator.calculate( "//[.][?]\n1000.5?1" ), 1006 );
-    assertEquals( calculator.calculate( "//[=][+]\n1000=5+1" ), 1006 );
-    assertEquals( calculator.calculate( "//[<][>]\n1000<5>1" ), 1006 );
-    assertEquals( calculator.calculate( "//[\"][']\n1000\"5'1" ), 1006 );
-    assertEquals( calculator.calculate( "//[-][BbB]\n1000-5BbB1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[##][:]\n1000##5:1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[buggs][bunny]\n1000buggs5bunny1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[_][~]\n1000_5~1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[@][2]\n1000@521" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[!][$]\n1000!5$1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[%][^]\n1000%5^1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[&][*]\n1000&5*1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[(][)]\n1000(5)1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[{][}]\n1000{5}1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[`][|]\n1000`5|1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[\\][;]\n1000\\5;1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[\\][;]\n1000\\5;1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[.][?]\n1000.5?1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[=][+]\n1000=5+1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[<][>]\n1000<5>1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[\"][']\n1000\"5'1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[-][BbB]\n1000-5BbB1" ), 1006 );
     // This works, but you have the order of the braketed strings matters
-    assertEquals( calculator.calculate( "//[+++][+]\n1000+5+++1" ), 1006 );
+    assertEquals( StringCalculator.calculate( "//[+++][+]\n1000+5+++1" ), 1006 );
     // so this will pass because the string gets really fouled up.  It's not worth fixing here.
-    assertThrows( NumberFormatException.class, () -> { calculator.calculate( "//[+][+++]\n1000+5+++1" ); } );
+    assertThrows( NumberFormatException.class, () -> { StringCalculator.calculate( "//[+][+++]\n1000+5+++1" ); } );
   }
 }

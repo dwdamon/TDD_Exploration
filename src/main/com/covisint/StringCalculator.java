@@ -7,15 +7,15 @@ public class StringCalculator
 {
   private static String[] EMPTY_TOKEN_SET = new String[ 0 ];
   
-  public StringCalculator()
+  private StringCalculator()
   {
   }
   
-  private String[] tokenizeCommaAndNewLineDelimiters( String value ) {
+  private static String[] tokenizeCommaAndNewLineDelimiters( String value ) {
     return value.split( "[\n,]" );
   }
   
-  private String[] tokenizeCustomDelimiters( String value ) {
+  private static String[] tokenizeCustomDelimiters( String value ) {
     String   work   = value.substring( 2 );
     String[] temp   = work.split( "\n", 2 );
     String[] retval = StringCalculator.EMPTY_TOKEN_SET;
@@ -34,7 +34,7 @@ public class StringCalculator
     return retval;
   }
   
-  public int calculate( String value )
+  public static int calculate( String value )
   {
     int retval = 0;
   
@@ -43,7 +43,7 @@ public class StringCalculator
       String[] tokens = null;
       if( value.startsWith( "//" ))
       {
-        tokens = this.tokenizeCustomDelimiters( value );
+        tokens = tokenizeCustomDelimiters( value );
       }
       else {
         tokens = tokenizeCommaAndNewLineDelimiters( value );
