@@ -78,6 +78,7 @@ public class StringCalculatorTest
   void negativeNumbersThrowException()
   {
     assertThrows( IllegalArgumentException.class, () -> { calculator.calculate( "-1" ); }, "No negative numbers!" );
+    assertThrows( IllegalArgumentException.class, () -> { calculator.calculate( "1,-1" ); }, "No negative numbers!" );
   }
   
   @Test
