@@ -1,4 +1,4 @@
-package com.covisint.fizzbuzz;
+package com.covisint;
 
 import java.util.concurrent.ThreadLocalRandom;
 

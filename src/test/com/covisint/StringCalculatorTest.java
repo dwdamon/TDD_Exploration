@@ -1,4 +1,4 @@
-package com.covisint.fizzbuzz;
+package com.covisint;
 
 import com.covisint.StringCalculator;
 import org.junit.jupiter.api.BeforeEach;
