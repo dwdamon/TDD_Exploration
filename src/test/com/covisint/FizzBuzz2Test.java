@@ -12,6 +12,7 @@ public class FizzBuzz2Test {
     assertEquals( "Fizz", FizzBuzz2.evaluate( 3 ));
     assertEquals( "Fizz", FizzBuzz2.evaluate( 6 ));
     assertEquals( "Fizz", FizzBuzz2.evaluate( 9 ));
+    assertEquals( "Fizz", FizzBuzz2.evaluate( 12 ));
     assertEquals( "Fizz", FizzBuzz2.evaluate( 24 ));
   }
   
@@ -21,12 +22,15 @@ public class FizzBuzz2Test {
     assertEquals( "Buzz", FizzBuzz2.evaluate( 10 ));
     assertEquals( "Buzz", FizzBuzz2.evaluate( 20 ));
     assertEquals( "Buzz", FizzBuzz2.evaluate( 25 ));
+    assertEquals( "Buzz", FizzBuzz2.evaluate( 35 ));
   }
   
   @Test
   public void shouldReturnFizzBuzz() {
     assertEquals( "FizzBuzz", FizzBuzz2.evaluate( 15 ));
     assertEquals( "FizzBuzz", FizzBuzz2.evaluate( 30 ));
+    assertEquals( "FizzBuzz", FizzBuzz2.evaluate( 45 ));
+    assertEquals( "FizzBuzz", FizzBuzz2.evaluate( 60 ));
   }
   
   @Test void shouldReturnNumber() {
