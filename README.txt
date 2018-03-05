@@ -18,3 +18,4 @@ as well.  Some of there are from there, though they may be renamed.
      issues (assuming the chop terminates before you get bored and kill it,
      and that you have enough RAM to run it).
  }
+ 4) Namespace storage
