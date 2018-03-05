@@ -1,4 +1,9 @@
 Kata's:
+There is a list of them at:
+    http://codekata.com/
+as well.  Some of there are from there, though they may be renamed.
+
+
  1) FizzBuzz
  2) StringCalculator
  3) binary indexOf {
